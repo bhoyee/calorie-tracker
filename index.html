@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Calories Tracker</title>
+</head>
+<body>
+     <!-- Navbar -->
+     <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand mx-auto">Calories Tracker </a>
+          <button class="btn btn-dark my-2 my-sm-0 justify-content-end" id="clearBtn" type="submit">Clear All</button>
+      </nav>
+      <!--End Navbar-->
+    
+      <!-- start container-->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto"> 
+                <div id="alert"></div>
+                <div class="card card-body my-3"> 
+                    <h3 id="header">Add Meal / Food Item</h3>
+                    <h3 id="headerUpdate">Update Meal / Food Item</h3>
+                    <form action="">
+                        <div class="form-group">
+                            <label id="lbgo" for="">Your Weekly Calorie Goal (e.g 2300)</label>
+
+                            <input type="number" class="form-control mb-3" name="" id="wgoal" placeholder="Add Goal Calories" >    
+                        </div>
+                    
+                        <div class="form-group">
+                            <label id="lbdate" for="">Select Date</label>
+                            <input type="date" name="" id="txtdate" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label id="lbmeal" for="">Meal</label>
+                            <input type="text" name="" id="txtmeal" class="form-control" placeholder="Add Item">
+                        </div>
+                        <div class="form-group">
+                            <label id="lbcalorie" for="">Calories</label>
+                            <input type="number" name="" id="txtCalorie" class="form-control" placeholder="Add Calories">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-md" id="btnEnter" value="Enter">
+                            <button class="btn btn-primary btn-md" id="btnAddMeal"> <i class="fa fa-plus"></i> Add Meal</button>
+                            <button class="btn btn-warning btn-md" id="btnUpdate"><i class="fa fa-pencil-square-o"></i> Update Meal</button>
+                            <button class="btn btn-danger btn-md" id="btnDel"><i class="fa fa-remove"></i> Delete Meal</button>
+                            <button class="btn btn-dark btn-md float-right" id="btnBack"><i class="fa fa-chevron-circle-left"></i> Back</button>
+                        </div>
+                    </form>
+                </div> 
+                   <!-- Calorie Count -->
+                 <h6 class="d-inline text-primary ml-3 font-weight-bolder" id="totalCal">Total Calories: <span class="total-calories">0,</span> </h6>
+                 <h6 class="d-inline text-success font-weight-bolder" id="goal"> Your Goal: <span class="your-goal">0,</span></h6>
+                 <h6 class="d-inline font-weight-bolder" id="remain"> Remaining: <span class="remaining"> 0</span></h6>
+
+                        <!-- Item List -->
+                        <div id="item-lists"></div>
+                <ul id="item-list" class="list-group my-4">
+                    
+                   
+                </ul>
+            </div>
+        </div>
+        <div></div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="app.js"></script>
+
+  </body>
+</html>
