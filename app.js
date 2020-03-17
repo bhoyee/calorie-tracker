@@ -587,6 +587,7 @@ const App = (function(StorageCtrl, ItemCtrl, UICtrl){
          if(input.date !== '' && input.name !== '' &&  input.calories !== '') {
 
          const newItem = ItemCtrl.addItem(input.date, input.name, input.calories);
+         
         
           //Add Item to UI 
          UICtrl.addListItem(newItem);
@@ -635,7 +636,7 @@ const App = (function(StorageCtrl, ItemCtrl, UICtrl){
               ` ;
               setTimeout(() => {
                   clearAlert();
-              }, 40000);
+              }, 5000);
   
               document.getElementById('remain').style.color = 'red';
               }  
@@ -687,6 +688,11 @@ const App = (function(StorageCtrl, ItemCtrl, UICtrl){
         // Add total calories to UI
         UICtrl.showTotalCalories(totalCalories);
 
+        const totalRemain = ItemCtrl.getTotalRemain();
+
+        UICtrl.showRemainCalories(totalRemain);
+        document.getElementById('remain').style.color = 'black';
+
         // Update local storage
         StorageCtrl.updateItemStorage(updatedItem);
 
@@ -717,11 +723,18 @@ const App = (function(StorageCtrl, ItemCtrl, UICtrl){
           const totalCalories = ItemCtrl.getTotalCalories();
           // Add total calories to UI
           UICtrl.showTotalCalories(totalCalories);
+          
+          //Get total Remian calories
+          const totalRemain = ItemCtrl.getTotalRemain();
+
+          UICtrl.showRemainCalories(totalRemain);
+          document.getElementById('remain').style.color = 'black';
+
 
           // Delete from local storage
           StorageCtrl.deleteItemFromStorage(currentItem.id);
           
-          UICtrl.clearEditState();
+         // UICtrl.clearEditState();
           
         } else {
 
@@ -736,8 +749,9 @@ const App = (function(StorageCtrl, ItemCtrl, UICtrl){
           }, 5000);
           console.log('something is wromg');
 
-          UICtrl.showEditState();
-        }        
+          // UICtrl.clearEditState();
+        }   
+        UICtrl.clearEditState();     
 
           e.preventDefault();
         }
