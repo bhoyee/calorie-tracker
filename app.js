@@ -1,4 +1,245 @@
 
+//UI Controller
+const UICtrl = (function() {
+
+    //UI Object 
+    const UISelectors = {
+
+        itemList: '#item-list',
+        itemLists: '#item-lists',
+        listItems: '#item-list li',
+        Lbdate: '#lbdate',
+        Lbmeal: '#lbmeal',
+        Lbcalorie: '#lbcalorie',
+        Weeklygoal: '#wgoal',
+        TxtDate: '#txtdate',
+        TxtMeal: '#txtmeal',
+        TxtCalorie: '#txtCalorie',
+        BtnEnter: '#btnEnter',
+        BtnAddMeal: '#btnAddMeal',
+        BtnUpdate: '#btnUpdate',
+        BtnDelete: '#btnDel',
+        BtnBack: '#btnBack',
+        TotalCal: '#totalCal',
+        Goal: '#goal',
+        Remain: '#remain',
+        YourGoal: '.your-goal',
+        Tcal: '.total-calories',
+        Remaining: '.remaining',
+        clearBtn: '#clearBtn',
+        LBgo: '#lbgo',
+        Header: '#header',
+        updateHeader: '#headerUpdate'
+
+    }
+
+    //public method
+    return {
+        populateItemList: function(items){
+            let html = '';
+      
+            items.forEach(function(item){
+              html += `<li class="list-group-item" id="item-${item.id}">
+              <strong>${item.name}: </strong> <em>${item.calories} Calories | </em> <strong class="float-center">${item.date}</strong>
+              <a href="#" class="secondary-content">
+                  <i class="edit-item fa fa-pencil float-right"></i>
+              </a>
+            </li>`;
+            });
+      
+            // Insert list items
+            document.querySelector(UISelectors.itemList).innerHTML = html;
+          },
+
+            //Get form Input
+          getItemInput: function(){
+            return {
+              date:document.querySelector(UISelectors.TxtDate).value,
+              name:document.querySelector(UISelectors.TxtMeal).value,
+              calories:document.querySelector(UISelectors.TxtCalorie).value
+            }
+          },
+          
+          //Clear Home Screen
+        clearHomeState: function() {
+           
+            document.querySelector(UISelectors.Lbdate).style.display='none';
+            document.querySelector(UISelectors.Lbcalorie).style.display='none';
+            document.querySelector(UISelectors.Lbmeal).style.display='none';
+            document.querySelector(UISelectors.TxtDate).style.display='none';
+            document.querySelector(UISelectors.TxtMeal).style.display='none';
+            document.querySelector(UISelectors.TxtCalorie).style.display='none';
+            document.querySelector(UISelectors.BtnAddMeal).style.display='none';
+            document.querySelector(UISelectors.BtnUpdate).style.display='none';
+            document.querySelector(UISelectors.BtnDelete).style.display='none';
+            document.querySelector(UISelectors.BtnBack).style.display='none';
+            document.querySelector(UISelectors.Header).style.display='none';
+            document.querySelector(UISelectors.updateHeader).style.display='none';
+        },
+         // Clear Input Form
+        clearInput: function(){
+            document.querySelector(UISelectors.TxtDate).value = '';
+            document.querySelector(UISelectors.TxtMeal).value = '';
+            document.querySelector(UISelectors.TxtCalorie).value = '';
+          },
+
+          // Add Item to Form
+          addItemToForm: function(){
+            document.querySelector(UISelectors.TxtDate).value = ItemCtrl.getCurrentItem().date;
+            document.querySelector(UISelectors.TxtMeal).value = ItemCtrl.getCurrentItem().name;
+            document.querySelector(UISelectors.TxtCalorie).value = ItemCtrl.getCurrentItem().calories;
+            UICtrl.showEditState();
+          },
+          //Remove Item
+          removeItems: function(){
+            let listItems = document.querySelectorAll(UISelectors.listItems);
+      
+            // Turn Node list into array
+            listItems = Array.from(listItems);
+      
+            listItems.forEach(function(item){
+              item.remove();
+            });
+          },
+
+          //Hide lIst
+          hideList: function(){
+            document.querySelector(UISelectors.itemList).style.display = 'none';
+          },
+
+          //Clear Edit State
+          clearEditState: function(){
+            UICtrl.clearInput();
+            document.querySelector(UISelectors.BtnUpdate).style.display = 'none';
+            document.querySelector(UISelectors.BtnDelete).style.display = 'none';
+            document.querySelector(UISelectors.BtnBack).style.display = 'none';
+            document.querySelector(UISelectors.BtnAddMeal).style.display = 'inline';
+            document.querySelector(UISelectors.updateHeader).style.display='none';
+            document.querySelector(UISelectors.Header).style.display='inline';
+          },
+
+          //Clear Goal Setting State
+          clearGoalSetting: function() {
+
+            UICtrl.clearHomeState();
+            document.querySelector(UISelectors.LBgo).style.display='inline';
+            document.querySelector(UISelectors.Weeklygoal).style.display='inline';
+            document.querySelector(UISelectors.Weeklygoal).value = '';
+            document.querySelector(UISelectors.BtnEnter).style.display='inline';
+           
+
+
+          },
+
+          //Show Edit State
+          showEditState: function(){
+            document.querySelector(UISelectors.BtnUpdate).style.display = 'inline';
+            document.querySelector(UISelectors.BtnDelete).style.display = 'inline';
+            document.querySelector(UISelectors.BtnBack).style.display = 'inline';
+            document.querySelector(UISelectors.BtnAddMeal).style.display = 'none';
+            document.querySelector(UISelectors.updateHeader).style.display='inline';
+            document.querySelector(UISelectors.Header).style.display='none';
+          },
+
+          //Show UI object
+        showAfterGoalSet: function() {
+
+            document.querySelector(UISelectors.Lbdate).style.display='inline';
+            document.querySelector(UISelectors.Lbcalorie).style.display='inline';
+            document.querySelector(UISelectors.Lbmeal).style.display='inline';
+            document.querySelector(UISelectors.TxtDate).style.display='inline';
+            document.querySelector(UISelectors.TxtMeal).style.display='inline';
+            document.querySelector(UISelectors.TxtCalorie).style.display='inline';
+            document.querySelector(UISelectors.BtnAddMeal).style.display='inline';
+            document.querySelector(UISelectors.BtnUpdate).style.display='none';
+            document.querySelector(UISelectors.BtnDelete).style.display='none';
+            document.querySelector(UISelectors.BtnBack).style.display='none';
+            document.querySelector(UISelectors.Header).style.display='inline';
+            document.querySelector(UISelectors.BtnEnter).style.display='none';
+            document.querySelector(UISelectors.Weeklygoal).style.display='none';
+            document.querySelector(UISelectors.LBgo).style.display='none';
+            document.querySelector(UISelectors.updateHeader).style.display='none';
+
+        },
+        getSelectors: function() {
+            return UISelectors;
+        },
+        getGoalInput: function() {
+            return {
+                goalCalorie: document.querySelector(UISelectors.Weeklygoal).value
+            }
+        },
+
+        addgoalCalorie: function(goalItem) {
+          
+            document.querySelector(UISelectors.YourGoal).textContent = `${goalItem.goalCalorie}`;
+
+        },
+        addListItem: function(item) {
+            // Show the list
+            document.querySelector(UISelectors.itemList).style.display = 'block';
+            // Create li element
+            const li = document.createElement('li');
+            // Add class
+            li.className = 'list-group-item';
+            // Add ID
+            li.id = `item-${item.id}`;
+            // Add HTML
+            li.innerHTML = `<strong>${item.name}: </strong> <em>${item.calories} Calories | </em> <strong class="float-center">${item.date}</strong>
+            <a href="#" class="secondary-content">
+                <i class="edit-item fa fa-pencil float-right"></i>
+            </a>`;
+            // Insert item
+            document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
+        },
+
+        updateListItem: function(item){
+          let listItems = document.querySelectorAll(UISelectors.listItems);
+    
+          // Turn Node list into array
+          listItems = Array.from(listItems);
+    
+          listItems.forEach(function(listItem){
+            const itemID = listItem.getAttribute('id');
+    
+            if(itemID === `item-${item.id}`){
+              document.querySelector(`#${itemID}`).innerHTML = `<strong>${item.name}: </strong> <em>${item.calories} Calories | </em> <strong class="float-center">${item.date}</strong>
+              <a href="#" class="secondary-content">
+                <i class="edit-item fa fa-pencil float-right"></i>
+              </a>`;
+            }
+          });
+        },
+
+        deleteListItem: function(id){
+          const itemID = `#item-${id}`;
+          const item = document.querySelector(itemID);
+          item.remove();
+        },
+      
+        showTotalCalories: function(totalCalories){
+            document.querySelector(UISelectors.Tcal).textContent = totalCalories;
+          },
+
+        showGoalSet: function(item) {
+            document.querySelector(UISelectors.YourGoal).textContent = item;
+          },
+
+        showRemainCalories: function(totalremain) {
+         document.querySelector(UISelectors.Remaining).textContent = totalremain;
+        
+
+        },
+
+        clearGoal: function() {
+          document.querySelector(UISelectors.YourGoal).textContent = 0;
+        },
+
+        clearRemainCalories() {
+          document.querySelector(UISelectors.Remaining).textContent = 0;
+        }
+    }
+})();
 
 //App Controller
 const App = (function(StorageCtrl, ItemCtrl, UICtrl){
@@ -317,7 +558,7 @@ const App = (function(StorageCtrl, ItemCtrl, UICtrl){
         
             }
             else {
-
+              
                 UICtrl.clearHomeState();
             }
             
