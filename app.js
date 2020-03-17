@@ -1,4 +1,204 @@
 
+//Item Controller
+const ItemCtrl = (function() {
+
+    //Calorie Goal Set constructor
+    const GoalSet = function(goalCalorie) {
+        this.goalCalorie = goalCalorie;
+    }
+    
+
+    // Item Constructor
+    const Item = function(id, date, name, calories, goal) {
+        this.id = id;
+        this.date = date;
+        this.name = name;
+        this.calories = calories;
+        this.goal = goal;
+    } 
+
+    // Data Structure 
+    const data = {
+       
+        items: StorageCtrl.getItemsFromStorage(),
+        currentItem: null,
+        totalCalories: 0,
+        yourGoal: [],
+        tyourGoal: 0,
+        totalremain: 0
+    }
+
+    //public method
+    return {
+        getItems: function(){
+            return data.items;
+          },
+
+          //Add Goal
+        addGoalCalorie: function(goalCalorie) {
+            
+            newItem = new GoalSet(goalCalorie);
+             // add to yourGoal array 
+             data.yourGoal.push(newItem);
+             return newItem ;   
+        },
+       
+        //Add new Item
+        addItem: function(date, name, calories) {
+            let goal = ItemCtrl.getGoalCalorie();
+            let ID;
+            // Create ID
+            if(data.items.length > 0){
+              ID = data.items[data.items.length - 1].id + 1;
+            } else {
+              ID = 0;
+            }
+             // Convert Calories to number
+             calories = parseInt(calories);
+              // Create new item
+            newItem = new Item(ID, date, name, calories, goal);
+             // Add to items array
+            data.items.push(newItem);
+
+            return newItem;
+        },
+
+        //Get Item By ID
+        getItemById: function(id){
+          let found = null;
+          // Loop through items
+          data.items.forEach(function(item){
+            if(item.id === id){
+              found = item;
+            }
+          });
+          return found;
+        },
+
+        //Update Item
+        updateItem: function(date, name, calories){
+          // Calories to number
+          calories = parseInt(calories);
+    
+          let found = null;
+    
+          data.items.forEach(function(item){
+            if(item.id === data.currentItem.id){
+              item.date = date;
+              item.name = name;
+              item.calories = calories;
+              found = item;
+            }
+          });
+          return found;
+        },
+
+        //Delete Item
+        deleteItem: function(id){
+          // Get ids
+          const ids = data.items.map(function(item){
+            return item.id;
+          });
+    
+          // Get index
+          const index = ids.indexOf(id);
+    
+          // Remove item
+          data.items.splice(index, 1);
+        },
+
+        //Clear All Items
+        clearAllItems: function(){
+          data.items = [];
+        },
+
+         //Set Current Item
+        setCurrentItem: function(item){
+          data.currentItem = item;
+        },
+
+        //Get Current Item
+        getCurrentItem: function(){
+          return data.currentItem;
+        },
+
+          //Get Goal Calorie 
+        getGoalCalorie: function() {
+           
+            let rtotal = 0;
+            data.yourGoal.forEach(function(items) {
+           
+               rtotal = JSON.parse(items.goalCalorie);
+          
+            });
+            data.tyourGoal = rtotal;
+            return data.tyourGoal;
+
+        },
+
+        getgoalarr: function() {
+            let goalSet;
+
+            data.items.forEach(function(item){
+              goalSet = item.goal;
+            });
+
+             data.tyourGoal = goalSet;
+            return data.tyourGoal;
+          
+    
+        },
+
+          //Get total Calories
+          getTotalCalories: function(){
+            let total = 0;
+      
+            // Loop through items and add cals
+            data.items.forEach(function(item){
+              total += item.calories;
+            });
+      
+            // Set total cal in data structure
+            data.totalCalories = total;
+      
+            // Return total
+            return data.totalCalories;
+          },
+
+           //Get total Rmaining
+          getTotalRemain: function(rtotals){
+            //  let rtotals = 0;
+              let remainCalorie;
+
+              rtotals = ItemCtrl.getgoalarr();
+            
+              remainCalorie = rtotals - data.totalCalories;
+            
+              data.totalremain = remainCalorie;
+
+              return data.totalremain;
+
+          },
+
+          // this calulate 2% of goal Set Calorie 
+          getPercentage: function() {
+
+            const percentNumb = 2;
+            let percentAmount = ItemCtrl.getGoalCalorie();
+
+            const Num = parseFloat(percentNumb / 100);
+            const percentage = parseFloat( Num * percentAmount);
+            return percentage;
+           
+          },
+
+          logData: function(){
+            return data;
+          }
+
+    }
+})();
+
 //UI Controller
 const UICtrl = (function() {
 
